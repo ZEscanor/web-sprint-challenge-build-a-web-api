@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000; // in order for heroku to use its own env
 const server = express();
 
 server.use(express.json())
-server.use(cors())
+
 
 
 
