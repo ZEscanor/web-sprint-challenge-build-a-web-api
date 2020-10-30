@@ -12,6 +12,7 @@ server.use(express.json())
 
 
 //CRUD OPERATIONS BEGINNING
+//Our post operation it will use our req.body and a middleware function to properly handle the request.
 server.post("/actions",[validatePost],(req,res)=>{
 action.insert(req.body)
 .then(data=>{
@@ -21,7 +22,7 @@ action.insert(req.body)
     res.status(400).json({errormessage:"id not found"})
 })
 })
-
+//Our put function it will validate data and then change it based on what is given in the request
 server.put("/actions/:id",[validatePost],(req,res)=>{
     console.log(req.params,req.body)
     action.update(req.params.id,req.body)
@@ -33,7 +34,7 @@ server.put("/actions/:id",[validatePost],(req,res)=>{
         res.status(400).json({errorMessage:"not found"})
       })
 })
-
+//Our delete function it will delete a specific id that is specified
 server.delete("/actions/:id", (req,res)=>{
     action.remove(req.params.id)
     .then(data=>{
@@ -44,7 +45,7 @@ server.delete("/actions/:id", (req,res)=>{
     })
     
 })
-
+//get a specific index, currently it only implemented to get one at a time but would like to know how to return all
 server.get("/actions/:id",(req,res)=>{
     console.log(req.params)
     action.get(req.params.id)
@@ -58,7 +59,7 @@ server.get("/actions/:id",(req,res)=>{
 
 
 
-
+// posts a new project to the database
 server.post("/projects",[validateProject],(req,res)=>{
     project.insert(req.body)
     .then(data=>{
@@ -68,7 +69,7 @@ server.post("/projects",[validateProject],(req,res)=>{
         res.status(400).json({errormessage:"id not found"})
     })
     })
-
+    // changes an existing project
     server.put("/projects/:id",[validateProject],(req,res)=>{
         console.log(req.params,req.body)
         project.update(req.params.id,req.body)
@@ -80,7 +81,7 @@ server.post("/projects",[validateProject],(req,res)=>{
             res.status(400).json({errorMessage:"not found"})
           })
     })
-
+//deletes an existing project
     server.delete("/projects/:id", (req,res)=>{
         project.remove(req.params.id)
         .then(data=>{
@@ -91,8 +92,7 @@ server.post("/projects",[validateProject],(req,res)=>{
         })
         
     })
-
-
+// gets a specific project at an ID, currently however there is only one project in the database
 server.get("/projects/:id",(req,res)=>{
     console.log(req.params)
     project.get(req.params.id)
@@ -119,11 +119,11 @@ server.get("/projects/:id",(req,res)=>{
 
 
 
-
+// I prefer using * because it tells me that my server is still working but i might of mistyped a endpoint
 server.get('*', (req,res)=>{
     res.send("Let's Begin Our Sprint!")
 });
-
+//listens for the port number
 server.listen(PORT,()=>{
     console.log(`Server Running on PORT ${PORT}`)
 })
