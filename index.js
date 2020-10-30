@@ -1,16 +1,17 @@
+require('dotenv').config() // neccessary in order to deploy to heroku
 const express = require("express")
 
 const action = require("./data/helpers/actionModel")
 const project = require("./data/helpers/projectModel")
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // in order for heroku to use its own env variables
 const server = express();
 
 server.use(express.json())
-//server.use(action);
-//server.use(project)
-//server.use(logger)
+server.use(cors())
 
 
+
+//CRUD OPERATIONS BEGINNING
 server.post("/actions",[validatePost],(req,res)=>{
 action.insert(req.body)
 .then(data=>{
